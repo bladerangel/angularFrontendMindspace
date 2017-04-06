@@ -1,15 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {QuoteService} from '../services/quote.service';
+import {NgForm} from '@angular/forms';
 
 @Component({
-  selector: 'app-new-quote',
-  templateUrl: './new-quote.component.html',
-  styleUrls: ['./new-quote.component.css']
+    selector: 'app-new-quote',
+    templateUrl: './new-quote.component.html',
+    styleUrls: ['./new-quote.component.css']
 })
 export class NewQuoteComponent implements OnInit {
 
-  constructor() { }
+    constructor(private quoteService: QuoteService) {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
+
+    onSubmit(form: NgForm) {
+        this.quoteService.addQuote(form.value.content)
+            .subscribe(
+                () => alert('Quote created!')
+            );
+        form.onReset();
+    }
 
 }
